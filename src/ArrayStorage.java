@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -35,7 +37,12 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return new Resume[0];
+//        return Arrays.copyOf(this.storage, this.count);  // вариант номер 1
+
+        // вариант номер 2
+        final Resume[] result = new Resume[this.count];
+        System.arraycopy(this.storage, 0, result, 0, this.count);
+        return result;
     }
 
     int size() {
