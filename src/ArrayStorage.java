@@ -11,6 +11,17 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
+        if (r == null) {
+            throw new IllegalArgumentException("Cannot save null resume");
+        }
+
+        if (count == storage.length) {
+            Resume[] newStorage = new Resume[storage.length * 2];
+            System.arraycopy(this.storage, 0, newStorage, 0, this.count);
+            this.storage = newStorage;
+        }
+
+        this.storage[this.count++] = r;
     }
 
     Resume get(String uuid) {
