@@ -12,17 +12,21 @@ public class MainArray {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
+
         while (true) {
             System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
+
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
                 continue;
             }
+
             String uuid = null;
             if (params.length == 2) {
                 uuid = params[1].intern();
             }
+
             switch (params[0]) {
                 case "list":
                     printAll();
@@ -59,13 +63,16 @@ public class MainArray {
     static void printAll() {
         Resume[] all = ARRAY_STORAGE.getAll();
         System.out.println("----------------------------");
+
         if (all.length == 0) {
             System.out.println("Empty");
-        } else {
+        }
+        else {
             for (Resume r : all) {
                 System.out.println(r);
             }
         }
+
         System.out.println("----------------------------");
     }
 }
