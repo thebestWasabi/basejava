@@ -3,8 +3,11 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    private int count;
 
     void clear() {
+        // сам storage можно и не чистить, так как его мы выводить не будем (во всяком случае пока)
+        this.count = 0;
     }
 
     void save(Resume r) {
