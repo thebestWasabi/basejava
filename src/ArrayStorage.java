@@ -10,7 +10,8 @@ public class ArrayStorage {
 
     void clear() {
         count = 0;
-        Arrays.fill(storage, null);
+        Arrays.fill(storage,0, count, null);
+//        Arrays.fill(storage, null);
     }
 
     void save(Resume r) {
