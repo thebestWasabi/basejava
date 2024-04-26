@@ -10,7 +10,7 @@ public class ArrayStorage {
 
     void clear() {
         count = 0;
-        storage = new Resume[10000];
+        Arrays.fill(storage, null);
     }
 
     void save(Resume r) {
@@ -26,7 +26,7 @@ public class ArrayStorage {
             throw new IllegalArgumentException("Cannot get null uuid");
         }
 
-        final var index = indexOf(uuid);
+        final int index = indexOf(uuid);
         return index != -1 ? storage[index] : null;
     }
 
@@ -35,7 +35,7 @@ public class ArrayStorage {
             throw new IllegalArgumentException("Cannot delete null uuid");
         }
 
-        final var index = indexOf(uuid);
+        final int index = indexOf(uuid);
 
         if (index != -1) {
             removeElement(index);
@@ -52,10 +52,17 @@ public class ArrayStorage {
     }
 
     private void removeElement(final int index) {
-        if (index < count - 1) {
-            System.arraycopy(storage, index + 1, storage, index, count - index - 1);
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException("Index out of bounds");
         }
-        count--;
+
+        if (index == count - 1) {
+            storage[--count] = null;
+        }
+        else {
+            System.arraycopy(storage, index + 1, storage, index, count - index - 1);
+            count--;
+        }
     }
 
     /**
