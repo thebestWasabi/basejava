@@ -17,6 +17,7 @@ public class ArrayStorage {
         if (r == null) {
             throw new IllegalArgumentException("Cannot save null resume");
         }
+
         storage[count++] = r;
     }
 
@@ -24,6 +25,7 @@ public class ArrayStorage {
         if (uuid == null) {
             throw new IllegalArgumentException("Cannot get null uuid");
         }
+
         final var index = indexOf(uuid);
         return index != -1 ? storage[index] : null;
     }
@@ -42,7 +44,7 @@ public class ArrayStorage {
 
     private int indexOf(final String uuid) {
         for (int i = 0; i < count; i++) {
-            if (this.storage[i].uuid.equals(uuid)) {
+            if (storage[i].uuid.equals(uuid)) {
                 return i;
             }
         }
