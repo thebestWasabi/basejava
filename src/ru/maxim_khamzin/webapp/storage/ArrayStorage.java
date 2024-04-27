@@ -5,11 +5,12 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.Arrays;
 
 
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
 
     private final Resume[] storage = new Resume[10000];
     private int count;
 
+    @Override
     public void save(final Resume resume) {
         if (resume == null) {
             throw new IllegalArgumentException("Cannot save null resume");
@@ -28,7 +29,16 @@ public class ArrayStorage {
         }
     }
 
+    // Неправильный вариант реализации метода get
+    public Resume getNotUsed(final String uuid) {
+        if (indexOf(uuid) == -1) {  // тут мы проходим первый раз по массиву
+            System.out.println("ERROR");
+            return null;
+        }
+        return storage[indexOf(uuid)];  // а вот тут мы проходим второй раз по массиву
+    }
 
+    @Override
     public Resume get(final String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("Cannot get null uuid");
@@ -39,6 +49,7 @@ public class ArrayStorage {
     }
 
 
+    @Override
     public void update(final Resume resume) {
         if (resume == null) {
             throw new IllegalArgumentException("Cannot update null resume");
@@ -52,6 +63,7 @@ public class ArrayStorage {
     }
 
 
+    @Override
     public void delete(final String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("Cannot delete null uuid");
@@ -65,6 +77,26 @@ public class ArrayStorage {
         else {
             deleteResume(index);
         }
+    }
+
+
+    @Override
+    public Resume[] getAll() {
+//        return Arrays.copyOf(storage, count);
+        return Arrays.copyOfRange(storage, 0, count);
+    }
+
+
+    @Override
+    public void clear() {
+        count = 0;
+        Arrays.fill(storage, 0, count, null);
+    }
+
+
+    @Override
+    public int size() {
+        return count;
     }
 
 
@@ -85,21 +117,5 @@ public class ArrayStorage {
 
         System.arraycopy(storage, index + 1, storage, index, count - index - 1);
         storage[--count] = null;
-    }
-
-
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, count);
-    }
-
-
-    public void clear() {
-        count = 0;
-        Arrays.fill(storage, 0, count, null);
-    }
-
-
-    public int size() {
-        return count;
     }
 }
