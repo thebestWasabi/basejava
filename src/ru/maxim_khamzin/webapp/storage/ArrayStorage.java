@@ -1,29 +1,33 @@
-package ru.maxim_khamzin.wepapp.storage;
+package ru.maxim_khamzin.webapp.storage;
 
-import ru.maxim_khamzin.wepapp.model.Resume;
+import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
+
 public class ArrayStorage {
 
     private final Resume[] storage = new Resume[10000];
     private int count;
-
-    public void clear() {
-        count = 0;
-        Arrays.fill(storage,0, count, null);
-    }
 
     public void save(final Resume resume) {
         if (resume == null) {
             throw new IllegalArgumentException("Cannot save null resume");
         }
 
-        storage[count++] = resume;
+        final var index = indexOf(resume.getUuid());
+
+        if (index != -1) {
+            System.out.println("ERROR Такое резюме уже существует: " + resume.getUuid());
+        }
+        else if (count == storage.length) {
+            System.out.println("ERROR Хранилище для резюме переполнено");
+        }
+        else {
+            storage[count++] = resume;
+        }
     }
+
 
     public Resume get(final String uuid) {
         if (uuid == null) {
@@ -34,6 +38,20 @@ public class ArrayStorage {
         return index != -1 ? storage[index] : null;
     }
 
+
+    public void update(final Resume resume) {
+        if (resume == null) {
+            throw new IllegalArgumentException("Cannot update null resume");
+        }
+
+        final var index = indexOf(resume.getUuid());
+
+        if (index != -1) {
+            storage[index] = resume;
+        }
+    }
+
+
     public void delete(final String uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException("Cannot delete null uuid");
@@ -41,10 +59,14 @@ public class ArrayStorage {
 
         final int index = indexOf(uuid);
 
-        if (index != -1) {
+        if (index == -1) {
+            System.out.println("ERROR Такого резюме нет: " + uuid);
+        }
+        else {
             deleteResume(index);
         }
     }
+
 
     private int indexOf(final String uuid) {
         for (int i = 0; i < count; i++) {
@@ -55,6 +77,7 @@ public class ArrayStorage {
         return -1;
     }
 
+
     private void deleteResume(final int index) {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index out of bounds");
@@ -64,12 +87,17 @@ public class ArrayStorage {
         storage[--count] = null;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
+
     public Resume[] getAll() {
         return Arrays.copyOf(storage, count);
     }
+
+
+    public void clear() {
+        count = 0;
+        Arrays.fill(storage, 0, count, null);
+    }
+
 
     public int size() {
         return count;

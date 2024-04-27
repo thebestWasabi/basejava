@@ -1,13 +1,13 @@
-package ru.maxim_khamzin.wepapp.storage;
+package ru.maxim_khamzin.webapp.storage;
 
-import ru.maxim_khamzin.wepapp.model.Resume;
+import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ru.maxim_khamzin.wepapp.storage.ArrayStorage implementation
+ * Interactive test for ru.maxim_khamzin.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {

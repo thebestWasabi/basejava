@@ -1,4 +1,4 @@
-package ru.maxim_khamzin.wepapp.model;
+package ru.maxim_khamzin.webapp.model;
 
 /**
  * Initial resume class
