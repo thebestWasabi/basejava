@@ -1,17 +1,22 @@
+package ru.maxim_khamzin.wepapp.storage;
+
+import ru.maxim_khamzin.wepapp.model.Resume;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for ru.maxim_khamzin.wepapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
+
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Resume r;
+        Resume resume;
 
         while (true) {
             System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | exit): ");
@@ -28,34 +33,27 @@ public class MainArray {
             }
 
             switch (params[0]) {
-                case "list":
+                case "list" -> printAll();
+                case "size" -> System.out.println(ARRAY_STORAGE.size());
+                case "save" -> {
+                    resume = new Resume();
+                    resume.setUuid(uuid);
+                    ARRAY_STORAGE.save(resume);
                     printAll();
-                    break;
-                case "size":
-                    System.out.println(ARRAY_STORAGE.size());
-                    break;
-                case "save":
-                    r = new Resume();
-                    r.uuid = uuid;
-                    ARRAY_STORAGE.save(r);
-                    printAll();
-                    break;
-                case "delete":
+                }
+                case "delete" -> {
                     ARRAY_STORAGE.delete(uuid);
                     printAll();
-                    break;
-                case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
-                    break;
-                case "clear":
+                }
+                case "get" -> System.out.println(ARRAY_STORAGE.get(uuid));
+                case "clear" -> {
                     ARRAY_STORAGE.clear();
                     printAll();
-                    break;
-                case "exit":
+                }
+                case "exit" -> {
                     return;
-                default:
-                    System.out.println("Неверная команда.");
-                    break;
+                }
+                default -> System.out.println("Неверная команда.");
             }
         }
     }
