@@ -1,6 +1,7 @@
-package ru.maxim_khamzin.webapp.storage;
+package ru.maxim_khamzin.webapp.ui;
 
 import ru.maxim_khamzin.webapp.model.Resume;
+import ru.maxim_khamzin.webapp.storage.ArrayStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
