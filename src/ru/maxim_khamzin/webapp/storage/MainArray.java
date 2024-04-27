@@ -15,7 +15,7 @@ public class MainArray {
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume resume;
 
         while (true) {
@@ -73,4 +73,5 @@ public class MainArray {
 
         System.out.println("----------------------------");
     }
+
 }
