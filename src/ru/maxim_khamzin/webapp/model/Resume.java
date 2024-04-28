@@ -2,10 +2,7 @@ package ru.maxim_khamzin.webapp.model;
 
 import java.util.Objects;
 
-/**
- * Initial resume class
- */
-public class Resume {
+public class Resume implements Comparable<Resume> {
 
     private String uuid;
 
@@ -25,6 +22,11 @@ public class Resume {
     @Override
     public String toString() {
         return uuid;
+    }
+
+    @Override
+    public int compareTo(final Resume o) {
+        return String.CASE_INSENSITIVE_ORDER.compare(uuid, o.uuid);
     }
 
     public String getUuid() {

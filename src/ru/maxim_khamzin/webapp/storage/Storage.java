@@ -2,8 +2,6 @@ package ru.maxim_khamzin.webapp.storage;
 
 import ru.maxim_khamzin.webapp.model.Resume;
 
-import java.util.Arrays;
-
 
 public interface Storage {
 

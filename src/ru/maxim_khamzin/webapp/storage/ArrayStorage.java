@@ -5,10 +5,7 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.Arrays;
 
 
-public class ArrayStorage implements Storage {
-
-    private final Resume[] storage = new Resume[10000];
-    private int count;
+public class ArrayStorage extends AbstractArrayStorage implements Storage {
 
     @Override
     public void save(final Resume resume) {
@@ -21,7 +18,7 @@ public class ArrayStorage implements Storage {
         if (index != -1) {
             System.out.println("ERROR Такое резюме уже существует: " + resume.getUuid());
         }
-        else if (count == storage.length) {
+        else if (count == STORAGE_LIMIT) {
             System.out.println("ERROR Хранилище для резюме переполнено");
         }
         else {
@@ -36,16 +33,6 @@ public class ArrayStorage implements Storage {
             return null;
         }
         return storage[indexOf(uuid)];  // а вот тут мы проходим второй раз по массиву
-    }
-
-    @Override
-    public Resume get(final String uuid) {
-        if (uuid == null) {
-            throw new IllegalArgumentException("Cannot get null uuid");
-        }
-
-        final int index = indexOf(uuid);
-        return index != -1 ? storage[index] : null;
     }
 
 
@@ -82,7 +69,6 @@ public class ArrayStorage implements Storage {
 
     @Override
     public Resume[] getAll() {
-//        return Arrays.copyOf(storage, count);
         return Arrays.copyOfRange(storage, 0, count);
     }
 
@@ -94,13 +80,7 @@ public class ArrayStorage implements Storage {
     }
 
 
-    @Override
-    public int size() {
-        return count;
-    }
-
-
-    private int indexOf(final String uuid) {
+    protected int indexOf(final String uuid) {
         for (int i = 0; i < count; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;

@@ -1,12 +1,11 @@
 import ru.maxim_khamzin.webapp.model.Resume;
 import ru.maxim_khamzin.webapp.storage.ArrayStorage;
+import ru.maxim_khamzin.webapp.storage.Storage;
 
-/**
- * Test for your ru.maxim_khamzin.wepapp.storage.ArrayStorage implementation
- */
+
 public class MainTestArrayStorage {
 
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
@@ -22,8 +21,6 @@ public class MainTestArrayStorage {
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
-
-        ARRAY_STORAGE.update(r3);
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
