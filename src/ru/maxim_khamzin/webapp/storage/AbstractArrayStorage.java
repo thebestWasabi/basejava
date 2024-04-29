@@ -1,5 +1,8 @@
 package ru.maxim_khamzin.webapp.storage;
 
+import ru.maxim_khamzin.webapp.exception.ExistStorageException;
+import ru.maxim_khamzin.webapp.exception.NotExistStorageException;
+import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -27,10 +30,10 @@ public abstract class AbstractArrayStorage implements Storage {
         final var index = indexOf(resume.getUuid());
 
         if (index > 0) {
-            System.out.println("ERROR Такое резюме уже существует: " + resume.getUuid());
+            throw new ExistStorageException(resume.getUuid());
         }
         else if (count == STORAGE_LIMIT) {
-            System.out.println("ERROR Хранилище для резюме переполнено");
+            throw new StorageException("Хранилище для резюме переполнено", resume.getUuid());
         }
         else {
             insertElement(resume, index);
@@ -46,7 +49,13 @@ public abstract class AbstractArrayStorage implements Storage {
         }
 
         final int index = indexOf(uuid);
-        return index > 0 ? storage[index] : null;
+
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+        else {
+            return storage[index];
+        }
     }
 
 
@@ -64,7 +73,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
         final var index = indexOf(resume.getUuid());
 
-        if (index > 0) {
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
+        }
+        else {
             storage[index] = resume;
         }
     }
@@ -79,7 +91,7 @@ public abstract class AbstractArrayStorage implements Storage {
         final int index = indexOf(uuid);
 
         if (index < 0) {
-            System.out.println("ERROR Такого резюме нет: " + uuid);
+            throw new NotExistStorageException(uuid);
         }
         else {
             fillDeletedElement(index);
