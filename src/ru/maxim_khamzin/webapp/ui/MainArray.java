@@ -2,6 +2,8 @@ package ru.maxim_khamzin.webapp.ui;
 
 import ru.maxim_khamzin.webapp.model.Resume;
 import ru.maxim_khamzin.webapp.storage.ArrayStorage;
+import ru.maxim_khamzin.webapp.storage.SortedArrayStorage;
+import ru.maxim_khamzin.webapp.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.io.InputStreamReader;
 
 public class MainArray {
 
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -34,8 +36,7 @@ public class MainArray {
                 case "list" -> printAll();
                 case "size" -> System.out.println(ARRAY_STORAGE.size());
                 case "save" -> {
-                    resume = new Resume();
-                    resume.setUuid(uuid);
+                    resume = new Resume(uuid);
                     ARRAY_STORAGE.save(resume);
                     printAll();
                 }

@@ -4,7 +4,11 @@ import java.util.Objects;
 
 public class Resume implements Comparable<Resume> {
 
-    private String uuid;
+    private final String uuid;
+
+    public Resume(final String uuid) {
+        this.uuid = uuid;
+    }
 
     @Override
     public boolean equals(final Object o) {
@@ -31,9 +35,5 @@ public class Resume implements Comparable<Resume> {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public void setUuid(final String uuid) {
-        this.uuid = uuid;
     }
 }
