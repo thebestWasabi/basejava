@@ -2,7 +2,6 @@ package ru.maxim_khamzin.webapp.ui;
 
 import ru.maxim_khamzin.webapp.model.Resume;
 import ru.maxim_khamzin.webapp.storage.ArrayStorage;
-import ru.maxim_khamzin.webapp.storage.SortedArrayStorage;
 import ru.maxim_khamzin.webapp.storage.Storage;
 
 import java.io.BufferedReader;
@@ -72,5 +71,4 @@ public class MainArray {
 
         System.out.println("----------------------------");
     }
-
 }

@@ -26,14 +26,4 @@ public class ArrayStorage extends AbstractArrayStorage implements Storage {
     protected void fillDeletedElement(final int index) {
         storage[index] = storage[count - 1];
     }
-
-
-    private void deleteResume(final int index) {
-        if (index < 0 || index >= count) {
-            throw new IllegalArgumentException("Index out of bounds");
-        }
-
-        System.arraycopy(storage, index + 1, storage, index, count - index - 1);
-        storage[--count] = null;
-    }
 }

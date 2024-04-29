@@ -100,6 +100,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
 
+    @Override
     public int size() {
         return count;
     }
@@ -110,5 +111,4 @@ public abstract class AbstractArrayStorage implements Storage {
         count = 0;
         Arrays.fill(storage, 0, count, null);
     }
-
 }
