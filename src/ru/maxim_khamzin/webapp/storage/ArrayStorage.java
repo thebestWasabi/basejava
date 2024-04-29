@@ -3,7 +3,7 @@ package ru.maxim_khamzin.webapp.storage;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 
-public class ArrayStorage extends AbstractArrayStorage implements Storage {
+public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int indexOf(final String uuid) {

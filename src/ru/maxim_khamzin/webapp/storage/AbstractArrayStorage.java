@@ -23,13 +23,9 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void save(final Resume resume) {
-        if (resume == null) {
-            throw new IllegalArgumentException("Cannot save null resume");
-        }
-
         final var index = indexOf(resume.getUuid());
 
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistStorageException(resume.getUuid());
         }
         else if (count == STORAGE_LIMIT) {
@@ -44,10 +40,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public Resume get(final String uuid) {
-        if (uuid == null) {
-            throw new IllegalArgumentException("Cannot get null uuid");
-        }
-
         final int index = indexOf(uuid);
 
         if (index < 0) {
@@ -67,10 +59,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void update(final Resume resume) {
-        if (resume == null) {
-            throw new IllegalArgumentException("Cannot update null resume");
-        }
-
         final var index = indexOf(resume.getUuid());
 
         if (index < 0) {
@@ -84,10 +72,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void delete(final String uuid) {
-        if (uuid == null) {
-            throw new IllegalArgumentException("Cannot delete null uuid");
-        }
-
         final int index = indexOf(uuid);
 
         if (index < 0) {
