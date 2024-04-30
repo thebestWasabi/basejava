@@ -79,8 +79,6 @@ public abstract class AbstractArrayStorageTest {
         storage.get("dummy");
     }
 
-
-    //=====================================================
     @Test
     public void getAll() {
         final var all = storage.getAll();
@@ -115,7 +113,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
 
-    //=====================================================
+    //========================OTHER=============================
     @Test
     public void size() {
         assertSize(3);
