@@ -18,7 +18,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(final int index);
 
-
     @Override
     public void save(final Resume resume) {
         final var index = getNotExistedSearchIndex(resume.getUuid());
@@ -68,15 +67,5 @@ public abstract class AbstractStorage implements Storage {
         else {
             return index;
         }
-    }
-
-    public static void main(String[] args) {
-        ListStorage listStorage = new ListStorage();
-        listStorage.save(new Resume("001"));
-        listStorage.save(new Resume("002"));
-        listStorage.save(new Resume("003"));
-
-        System.out.println(Arrays.toString(listStorage.getAll()));
-
     }
 }
