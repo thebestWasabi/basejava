@@ -10,7 +10,7 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected void doSave(final Resume resume) {
+    protected void doSave(final Resume resume, final int index) {
         storage.add(resume);
     }
 

@@ -4,15 +4,13 @@ import ru.maxim_khamzin.webapp.exception.ExistStorageException;
 import ru.maxim_khamzin.webapp.exception.NotExistStorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
-import java.util.Arrays;
-
 public abstract class AbstractStorage implements Storage {
 
     protected abstract int indexOf(final String uuid);
 
     protected abstract void doUpdate(Resume resume, int index);
 
-    protected abstract void doSave(final Resume resume);
+    protected abstract void doSave(final Resume resume, final int index);
 
     protected abstract Resume doGet(final int index);
 
@@ -21,7 +19,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void save(final Resume resume) {
         final var index = getNotExistedSearchIndex(resume.getUuid());
-        doSave(resume);
+        doSave(resume, index);
     }
 
 

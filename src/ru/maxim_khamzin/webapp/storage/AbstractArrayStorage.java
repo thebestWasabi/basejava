@@ -1,13 +1,11 @@
 package ru.maxim_khamzin.webapp.storage;
 
-import ru.maxim_khamzin.webapp.exception.ExistStorageException;
-import ru.maxim_khamzin.webapp.exception.NotExistStorageException;
 import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int STORAGE_LIMIT = 10_000;
 
@@ -22,32 +20,19 @@ public abstract class AbstractArrayStorage implements Storage {
 
 
     @Override
-    public void save(final Resume resume) {
-        final var index = indexOf(resume.getUuid());
-
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-        else if (count == STORAGE_LIMIT) {
+    protected void doSave(final Resume resume, final int index) {
+        if (count == STORAGE_LIMIT) {
             throw new StorageException("Хранилище для резюме переполнено", resume.getUuid());
         }
-        else {
-            insertElement(resume, index);
-            count++;
-        }
+
+        insertElement(resume, index);
+        count++;
     }
 
 
     @Override
-    public Resume get(final String uuid) {
-        final int index = indexOf(uuid);
-
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        else {
-            return storage[index];
-        }
+    protected Resume doGet(final int index) {
+        return storage[index];
     }
 
 
@@ -58,31 +43,16 @@ public abstract class AbstractArrayStorage implements Storage {
 
 
     @Override
-    public void update(final Resume resume) {
-        final var index = indexOf(resume.getUuid());
-
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-        else {
-            storage[index] = resume;
-        }
+    protected void doUpdate(final Resume resume, final int index) {
+        storage[index] = resume;
     }
 
 
     @Override
-    public void delete(final String uuid) {
-        final int index = indexOf(uuid);
-
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        else {
-            fillDeletedElement(index);
-            storage[count--] = null;
-        }
+    protected void doDelete(final int index) {
+        fillDeletedElement(index);
+        storage[count--] = null;
     }
-
 
     @Override
     public int size() {
