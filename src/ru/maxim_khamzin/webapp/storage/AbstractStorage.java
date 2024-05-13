@@ -6,64 +6,63 @@ import ru.maxim_khamzin.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract int indexOf(final String uuid);
+    protected abstract Object getSearchKey(final String uuid);
 
-    protected abstract void doUpdate(Resume resume, int index);
+    protected abstract boolean isExist(final Object searchKey);
 
-    protected abstract void doSave(final Resume resume, final int index);
+    protected abstract void doSave(final Resume resume, final Object searchKey);
 
-    protected abstract Resume doGet(final int index);
+    protected abstract Resume doGet(final Object searchKey);
 
-    protected abstract void doDelete(final int index);
+    protected abstract void doUpdate(final Resume resume, final Object searchKey);
+
+    protected abstract void doDelete(final Object searchKey);
+
 
     @Override
     public void save(final Resume resume) {
-        final var index = getNotExistedSearchIndex(resume.getUuid());
-        doSave(resume, index);
+        final var searchKey = getNotExistedSearchIndex(resume.getUuid());
+        doSave(resume, searchKey);
     }
 
 
     @Override
     public Resume get(final String uuid) {
-        final var index = getExistedSearchIndex(uuid);
-        return doGet(index);
+        final var searchKey = getExistedSearchIndex(uuid);
+        return doGet(searchKey);
     }
 
 
     @Override
     public void update(final Resume resume) {
-        final var index = getExistedSearchIndex(resume.getUuid());
-        doUpdate(resume, index);
+        final var searchKey = getExistedSearchIndex(resume.getUuid());
+        doUpdate(resume, searchKey);
     }
 
 
     @Override
     public void delete(final String uuid) {
-        final var index = getExistedSearchIndex(uuid);
-        doDelete(index);
+        final var searchKey = getExistedSearchIndex(uuid);
+        doDelete(searchKey);
     }
 
 
-    private int getExistedSearchIndex(final String uuid) {
-        final var index = indexOf(uuid);
+    private Object getExistedSearchIndex(final String uuid) {
+        final Object searchKey = getSearchKey(uuid);
 
-        if (index < 0) {
+        if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        else {
-            return index;
-        }
+        return searchKey;
     }
 
 
-    private int getNotExistedSearchIndex(final String uuid) {
-        final var index = indexOf(uuid);
+    private Object getNotExistedSearchIndex(final String uuid) {
+        final Object searchKey = getSearchKey(uuid);
 
-        if (index >= 0) {
+        if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
-        else {
-            return index;
-        }
+        return searchKey;
     }
 }

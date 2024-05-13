@@ -6,7 +6,7 @@ import ru.maxim_khamzin.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected int indexOf(final String uuid) {
+    protected Integer getSearchKey(final String uuid) {
         for (int i = 0; i < count; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;

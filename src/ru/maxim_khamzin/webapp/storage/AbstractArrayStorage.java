@@ -12,7 +12,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int count;
 
-    protected abstract int indexOf(final String uuid);
+    protected abstract Integer getSearchKey(final String uuid);
 
     protected abstract void insertElement(final Resume resume, final int index);
 
@@ -20,19 +20,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doSave(final Resume resume, final int index) {
+    protected void doSave(final Resume resume, final Object index) {
         if (count == STORAGE_LIMIT) {
             throw new StorageException("Хранилище для резюме переполнено", resume.getUuid());
         }
 
-        insertElement(resume, index);
+        insertElement(resume, (Integer) index);
         count++;
     }
 
 
     @Override
-    protected Resume doGet(final int index) {
-        return storage[index];
+    protected Resume doGet(final Object index) {
+        return storage[(Integer) index];
     }
 
 
@@ -43,16 +43,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doUpdate(final Resume resume, final int index) {
-        storage[index] = resume;
+    protected void doUpdate(final Resume resume, final Object index) {
+        storage[(Integer) index] = resume;
     }
 
 
     @Override
-    protected void doDelete(final int index) {
-        fillDeletedElement(index);
-        storage[count--] = null;
+    protected void doDelete(final Object index) {
+        fillDeletedElement((Integer) index);
+        storage[count] = null;
+        count--;
     }
+
 
     @Override
     public int size() {
@@ -64,5 +66,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         count = 0;
         Arrays.fill(storage, 0, count, null);
+    }
+
+
+    @Override
+    protected boolean isExist(final Object index) {
+        return (Integer) index >= 0;
     }
 }

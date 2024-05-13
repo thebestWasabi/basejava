@@ -13,7 +13,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
      * которое может быть использовано для определения места вставки элемента.
      */
     @Override
-    protected int indexOf(final String uuid) {
+    protected Integer getSearchKey(final String uuid) {
         final var searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, count, searchKey);
     }
