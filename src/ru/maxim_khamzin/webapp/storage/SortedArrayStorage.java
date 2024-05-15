@@ -3,8 +3,17 @@ package ru.maxim_khamzin.webapp.storage;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+
+    private static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<>() {
+        @Override
+        public int compare(final Resume o1, final Resume o2) {
+            return String.CASE_INSENSITIVE_ORDER.compare(o1.getUuid(), o2.getUuid());
+        }
+    };
+
 
     /**
      * Этот метод использует бинарный поиск для нахождения индекса элемента с заданным UUID в массиве хранилища.
@@ -15,7 +24,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected Integer getSearchKey(final String uuid) {
         final var searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, count, searchKey);
+        return Arrays.binarySearch(storage, 0, count, searchKey, RESUME_COMPARATOR);
     }
 
 

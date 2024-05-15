@@ -3,7 +3,7 @@ package ru.maxim_khamzin.webapp.model;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Resume implements Comparable<Resume> {
+public class Resume {
 
     private final String uuid;
 
@@ -31,11 +31,6 @@ public class Resume implements Comparable<Resume> {
     @Override
     public String toString() {
         return uuid;
-    }
-
-    @Override
-    public int compareTo(final Resume o) {
-        return String.CASE_INSENSITIVE_ORDER.compare(uuid, o.uuid);
     }
 
     public String getUuid() {
