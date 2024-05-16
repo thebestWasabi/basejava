@@ -7,12 +7,7 @@ import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    private static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<>() {
-        @Override
-        public int compare(final Resume o1, final Resume o2) {
-            return String.CASE_INSENSITIVE_ORDER.compare(o1.getUuid(), o2.getUuid());
-        }
-    };
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
 
     /**
