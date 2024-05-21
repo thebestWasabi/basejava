@@ -7,19 +7,19 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
-    protected abstract Object getSearchKey(final String uuid);
+    protected abstract SK getSearchKey(final String uuid);
 
-    protected abstract boolean isExist(final Object searchKey);
+    protected abstract boolean isExist(final SK searchKey);
 
-    protected abstract void doSave(final Resume resume, final Object searchKey);
+    protected abstract void doSave(final Resume resume, final SK searchKey);
 
-    protected abstract Resume doGet(final Object searchKey);
+    protected abstract Resume doGet(final SK searchKey);
 
-    protected abstract void doUpdate(final Resume resume, final Object searchKey);
+    protected abstract void doUpdate(final Resume resume, final SK searchKey);
 
-    protected abstract void doDelete(final Object searchKey);
+    protected abstract void doDelete(final SK searchKey);
 
     protected abstract List<Resume> doCopyGetAll();
 
@@ -40,10 +40,11 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> list = doCopyGetAll();
+        final var list = doCopyGetAll();
         Collections.sort(list);
         return list;
     }
+
 
     @Override
     public void update(final Resume resume) {
@@ -59,8 +60,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
 
-    private Object getExistedSearchIndex(final String uuid) {
-        final Object searchKey = getSearchKey(uuid);
+    private SK getExistedSearchIndex(final String uuid) {
+        final var searchKey = getSearchKey(uuid);
 
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
@@ -69,8 +70,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
 
-    private Object getNotExistedSearchIndex(final String uuid) {
-        final Object searchKey = getSearchKey(uuid);
+    private SK getNotExistedSearchIndex(final String uuid) {
+        final var searchKey = getSearchKey(uuid);
 
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);

@@ -6,7 +6,7 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10_000;
 
@@ -21,19 +21,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doSave(final Resume resume, final Object index) {
+    protected void doSave(final Resume resume, final Integer index) {
         if (count == STORAGE_LIMIT) {
             throw new StorageException("Хранилище для резюме переполнено", resume.getUuid());
         }
 
-        insertElement(resume, (Integer) index);
+        insertElement(resume, index);
         count++;
     }
 
 
     @Override
-    protected Resume doGet(final Object index) {
-        return storage[(Integer) index];
+    protected Resume doGet(final Integer index) {
+        return storage[index];
     }
 
 
@@ -44,14 +44,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doUpdate(final Resume resume, final Object index) {
-        storage[(Integer) index] = resume;
+    protected void doUpdate(final Resume resume, final Integer index) {
+        storage[index] = resume;
     }
 
 
     @Override
-    protected void doDelete(final Object index) {
-        fillDeletedElement((Integer) index);
+    protected void doDelete(final Integer index) {
+        fillDeletedElement(index);
         storage[count] = null;
         count--;
     }
@@ -71,7 +71,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected boolean isExist(final Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(final Integer index) {
+        return index >= 0;
     }
 }

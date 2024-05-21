@@ -3,34 +3,33 @@ package ru.maxim_khamzin.webapp.storage;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected void doSave(final Resume resume, final Object index) {
+    protected void doSave(final Resume resume, final Integer index) {
         storage.add(resume);
     }
 
 
     @Override
-    protected Resume doGet(final Object index) {
-        return storage.get((Integer) index);
+    protected Resume doGet(final Integer index) {
+        return storage.get(index);
     }
 
 
     @Override
-    protected void doUpdate(final Resume resume, final Object index) {
-        storage.set((Integer) index, resume);  // Обновляем элемент по индексу
+    protected void doUpdate(final Resume resume, final Integer index) {
+        storage.set(index, resume);  // Обновляем элемент по индексу
     }
 
 
     @Override
-    protected void doDelete(final Object index) {
-        storage.remove(((Integer) index).intValue());
+    protected void doDelete(final Integer index) {
+        storage.remove(index.intValue());
     }
 
 
@@ -64,7 +63,7 @@ public class ListStorage extends AbstractStorage {
 
 
     @Override
-    protected boolean isExist(final Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(final Integer index) {
+        return index >= 0;
     }
 }
