@@ -4,6 +4,9 @@ import ru.maxim_khamzin.webapp.exception.ExistStorageException;
 import ru.maxim_khamzin.webapp.exception.NotExistStorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(final String uuid);
@@ -17,6 +20,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doUpdate(final Resume resume, final Object searchKey);
 
     protected abstract void doDelete(final Object searchKey);
+
+    protected abstract List<Resume> doCopyGetAll();
 
 
     @Override
@@ -32,6 +37,13 @@ public abstract class AbstractStorage implements Storage {
         return doGet(searchKey);
     }
 
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> list = doCopyGetAll();
+        Collections.sort(list);
+        return list;
+    }
 
     @Override
     public void update(final Resume resume) {

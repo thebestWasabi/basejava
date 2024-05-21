@@ -3,6 +3,7 @@ package ru.maxim_khamzin.webapp.storage;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -34,8 +35,8 @@ public class ListStorage extends AbstractStorage {
 
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+    public List<Resume> doCopyGetAll() {
+        return new ArrayList<>(storage);
     }
 
 

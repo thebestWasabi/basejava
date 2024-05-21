@@ -4,6 +4,7 @@ import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -37,8 +38,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, count);
+    public List<Resume> doCopyGetAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, count));
     }
 
 

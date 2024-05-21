@@ -2,6 +2,8 @@ package ru.maxim_khamzin.webapp.storage;
 
 import ru.maxim_khamzin.webapp.model.Resume;
 
+import java.util.List;
+
 
 public interface Storage {
 
@@ -13,7 +15,7 @@ public interface Storage {
 
     void delete(final String uuid);
 
-    Resume[] getAll();
+    List<Resume> getAllSorted();
 
     void clear();
 

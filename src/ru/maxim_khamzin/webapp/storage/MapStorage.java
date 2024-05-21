@@ -2,7 +2,10 @@ package ru.maxim_khamzin.webapp.storage;
 
 import ru.maxim_khamzin.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
@@ -21,38 +24,38 @@ public class MapStorage extends AbstractStorage {
 
 
     @Override
-    protected boolean isExist(final Object index) {
-        return index != null;
+    protected boolean isExist(final Object uuid) {
+        return uuid != null && storage.containsKey(uuid.toString());
     }
 
 
     @Override
-    protected void doSave(final Resume resume, final Object index) {
+    protected void doSave(final Resume resume, final Object uuid) {
         storage.put(resume.getUuid(), resume);
     }
 
 
     @Override
-    protected Resume doGet(final Object index) {
-        return storage.get((String) index);
+    protected Resume doGet(final Object uuid) {
+        return storage.get((String) uuid);
     }
 
 
     @Override
-    protected void doUpdate(final Resume resume, final Object index) {
-        storage.replace((String) index, resume);
+    protected void doUpdate(final Resume resume, final Object uuid) {
+        storage.replace((String) uuid, resume);
     }
 
 
     @Override
-    protected void doDelete(final Object index) {
-        storage.remove((String) index);
+    protected void doDelete(final Object uuid) {
+        storage.remove((String) uuid);
     }
 
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
+    public List<Resume> doCopyGetAll() {
+        return new ArrayList<>(storage.values());
     }
 
 
@@ -64,6 +67,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public int size() {
-        return storage.keySet().size();
+        return storage.size();
     }
 }
