@@ -30,13 +30,11 @@ public abstract class AbstractStorage<SK> implements Storage {
         doSave(resume, searchKey);
     }
 
-
     @Override
     public Resume get(final String uuid) {
         final var searchKey = getExistedSearchIndex(uuid);
         return doGet(searchKey);
     }
-
 
     @Override
     public List<Resume> getAllSorted() {
@@ -45,20 +43,17 @@ public abstract class AbstractStorage<SK> implements Storage {
         return list;
     }
 
-
     @Override
     public void update(final Resume resume) {
         final var searchKey = getExistedSearchIndex(resume.getUuid());
         doUpdate(resume, searchKey);
     }
 
-
     @Override
     public void delete(final String uuid) {
         final var searchKey = getExistedSearchIndex(uuid);
         doDelete(searchKey);
     }
-
 
     private SK getExistedSearchIndex(final String uuid) {
         final var searchKey = getSearchKey(uuid);
@@ -68,7 +63,6 @@ public abstract class AbstractStorage<SK> implements Storage {
         }
         return searchKey;
     }
-
 
     private SK getNotExistedSearchIndex(final String uuid) {
         final var searchKey = getSearchKey(uuid);

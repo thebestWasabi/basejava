@@ -9,7 +9,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
-
     /**
      * Этот метод использует бинарный поиск для нахождения индекса элемента с заданным UUID в массиве хранилища.
      * Если элемент найден, метод возвращает его индекс.

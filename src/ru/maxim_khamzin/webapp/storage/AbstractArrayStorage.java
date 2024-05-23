@@ -21,6 +21,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
 
     @Override
+    protected boolean isExist(final Integer index) {
+        return index >= 0;
+    }
+
+    @Override
     protected void doSave(final Resume resume, final Integer index) {
         if (count == STORAGE_LIMIT) {
             throw new StorageException("Хранилище для резюме переполнено", resume.getUuid());
@@ -30,24 +35,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         count++;
     }
 
-
     @Override
     protected Resume doGet(final Integer index) {
         return storage[index];
     }
-
 
     @Override
     public List<Resume> doCopyGetAll() {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, count));
     }
 
-
     @Override
     protected void doUpdate(final Resume resume, final Integer index) {
         storage[index] = resume;
     }
-
 
     @Override
     protected void doDelete(final Integer index) {
@@ -56,22 +57,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         count--;
     }
 
-
     @Override
     public int size() {
         return count;
     }
 
-
     @Override
     public void clear() {
         count = 0;
         Arrays.fill(storage, 0, count, null);
-    }
-
-
-    @Override
-    protected boolean isExist(final Integer index) {
-        return index >= 0;
     }
 }
