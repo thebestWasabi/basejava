@@ -1,7 +1,6 @@
 package ru.maxim_khamzin.webapp.model;
 
 public enum ContactType {
-
     PHONE("Тел."),
     MOBILE("Мобильный тел."),
     HOME_PHONE("Домашний тел."),
