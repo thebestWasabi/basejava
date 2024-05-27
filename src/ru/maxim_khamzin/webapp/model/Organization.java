@@ -2,6 +2,8 @@ package ru.maxim_khamzin.webapp.model;
 
 import ru.maxim_khamzin.webapp.util.DateUtil;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -9,7 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization {
+public class Organization implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final Link homePage;
     private List<Position> positions = new ArrayList<>();
@@ -42,7 +47,11 @@ public class Organization {
         return Objects.hash(homePage, positions);
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;
@@ -57,8 +66,8 @@ public class Organization {
         }
 
         public Position(final LocalDate startDate, final LocalDate endDate,
-                        final String title, final String description
-        ) {
+                        final String title, final String description)
+        {
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(endDate, "endDate must not be null");
             Objects.requireNonNull(title, "title must not be null");
