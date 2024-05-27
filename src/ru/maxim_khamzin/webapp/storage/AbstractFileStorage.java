@@ -3,8 +3,14 @@ package ru.maxim_khamzin.webapp.storage;
 import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,9 +19,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     private final File directory;
 
-    protected abstract void doWrite(final Resume resume, final File file) throws IOException;
+    protected abstract void doWrite(final Resume resume, final OutputStream outputStream) throws IOException;
 
-    protected abstract Resume doRead(final File file) throws IOException;
+    protected abstract Resume doRead(final InputStream inputStream) throws IOException;
 
 
     protected AbstractFileStorage(File directory) {
@@ -55,7 +61,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGet(final File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         }
         catch (IOException e) {
             throw new StorageException("Can't read file: %s".formatted(file.getAbsolutePath()), file.getName(), e);
@@ -67,7 +73,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         final var files = directory.listFiles();
 
         if (files == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory read error");
         }
 
         List<Resume> result = new ArrayList<>(files.length);
@@ -80,7 +86,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(final Resume resume, final File file) {
         try {
-            doWrite(resume, file);
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         }
         catch (IOException e) {
             throw new StorageException("File write error: %s".formatted(file.getAbsolutePath()), resume.getUuid(), e);
@@ -92,7 +98,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         if (!file.delete()) {
             throw new StorageException("Error: file delete", file.getName());
         }
-
     }
 
     @Override
@@ -111,7 +116,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         final var list = directory.list();
 
         if (list == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory read error");
         }
         return list.length;
     }
