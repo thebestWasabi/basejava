@@ -49,7 +49,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
      */
     @Override
     protected void fillDeletedElement(final int index) {
-        int numMoved = count - index - 1; // если numMoved = 0 -  это последний элемент (тогда ничего не надо сдвигать)
+        int numMoved = count - index - 1; // если numMoved = 0 - это последний элемент (тогда ничего не надо сдвигать)
         if (numMoved > 0) {
             System.arraycopy(storage, index + 1, storage, index, numMoved);
         }

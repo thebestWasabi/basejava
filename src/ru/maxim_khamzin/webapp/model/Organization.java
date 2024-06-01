@@ -65,9 +65,11 @@ public class Organization implements Serializable {
             this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), title, description);
         }
 
-        public Position(final LocalDate startDate, final LocalDate endDate,
-                        final String title, final String description)
-        {
+        public Position(
+                final LocalDate startDate, final LocalDate endDate,
+                final String title,
+                final String description
+        ) {
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(endDate, "endDate must not be null");
             Objects.requireNonNull(title, "title must not be null");

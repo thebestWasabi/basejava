@@ -51,7 +51,7 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public String toString() {
-        return "Resume{uuid='%s', fullName='%s', \ncontacts=%s, \nsections=%s}"
+        return "Resume {\n\tuuid='%s', \n\tfullName='%s', \n\tcontacts=%s, \n\tsections=%s\n}"
                 .formatted(uuid, fullName, contacts, sections);
     }
 

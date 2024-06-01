@@ -7,7 +7,7 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage<SK> implements Storage {
+public abstract class AbstractStorage<SK> implements IStorage {
 
     protected abstract SK getSearchKey(final String uuid);
 

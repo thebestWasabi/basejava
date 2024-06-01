@@ -1,9 +1,8 @@
 package ru.maxim_khamzin.webapp.ui;
 
 import ru.maxim_khamzin.webapp.model.Resume;
-import ru.maxim_khamzin.webapp.storage.ArrayStorage;
 import ru.maxim_khamzin.webapp.storage.MapStorage;
-import ru.maxim_khamzin.webapp.storage.Storage;
+import ru.maxim_khamzin.webapp.storage.IStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class MainArray {
 
-    private final static Storage ARRAY_STORAGE = new MapStorage();
+    private final static IStorage ARRAY_STORAGE = new MapStorage();
 
     public static void main(String[] args) throws IOException {
         final var reader = new BufferedReader(new InputStreamReader(System.in));

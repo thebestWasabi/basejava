@@ -8,7 +8,7 @@ import static org.junit.Assert.fail;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
-    protected AbstractArrayStorageTest(final Storage storage) {
+    protected AbstractArrayStorageTest(final IStorage storage) {
         super(storage);
     }
 

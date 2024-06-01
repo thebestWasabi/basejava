@@ -5,7 +5,7 @@ import ru.maxim_khamzin.webapp.model.Resume;
 import java.util.List;
 
 
-public interface Storage {
+public interface IStorage {
 
     void save(final Resume resume);
 
