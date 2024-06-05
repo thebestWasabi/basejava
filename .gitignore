@@ -27,3 +27,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+/src/ru/maxim_khamzin/webapp/temp/
