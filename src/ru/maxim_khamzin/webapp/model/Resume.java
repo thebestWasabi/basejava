@@ -43,12 +43,6 @@ public class Resume implements Comparable<Resume>, Serializable {
         return Objects.hash(uuid, fullName);
     }
 
-//    @Override
-//    public String toString() {
-//        return "{uuid='%s', fullName='%s'}".formatted(uuid, fullName);
-//    }
-
-
     @Override
     public String toString() {
         return "Resume {\n\tuuid='%s', \n\tfullName='%s', \n\tcontacts=%s, \n\tsections=%s\n}"
