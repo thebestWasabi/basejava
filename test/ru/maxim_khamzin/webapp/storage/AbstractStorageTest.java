@@ -60,7 +60,10 @@ public abstract class AbstractStorageTest {
         RESUME_1.addSection(SectionType.EDUCATION,
                 new OrganizationSection(
                         new Organization("Skillfactory", "https://skillfactory.ru",
-                                new Organization.Position(2019, Month.SEPTEMBER, 2020, Month.DECEMBER, "Java-разработка", "описание"))
+                                new Organization.Position(2019, Month.SEPTEMBER, 2020, Month.DECEMBER, "Java-разработка", "описание")),
+
+                        new Organization("МУ им. С.Ю. Витте", "https://luxkod.ru",
+                                new Organization.Position(2019, Month.SEPTEMBER, 2022, Month.MARCH, "Java-разработка", "описание"))
                 ));
     }
 
