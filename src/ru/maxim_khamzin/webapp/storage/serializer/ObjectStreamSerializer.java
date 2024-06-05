@@ -1,4 +1,4 @@
-package ru.maxim_khamzin.webapp.storage;
+package ru.maxim_khamzin.webapp.storage.serializer;
 
 import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
@@ -9,21 +9,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage {
-
-    public ObjectStreamPathStorage(final String directory) {
-        super(directory);
-    }
+public class ObjectStreamSerializer implements StreamSerializer {
 
     @Override
-    protected void doWrite(final Resume resume, final OutputStream outputStream) throws IOException {
+    public void doWrite(final Resume resume, final OutputStream outputStream) throws IOException {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
             objectOutputStream.writeObject(resume);
         }
     }
 
     @Override
-    protected Resume doRead(final InputStream inputStream) throws IOException {
+    public Resume doRead(final InputStream inputStream) throws IOException {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
             return (Resume) objectInputStream.readObject();
         }
