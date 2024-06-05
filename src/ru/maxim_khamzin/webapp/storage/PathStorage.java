@@ -2,13 +2,12 @@ package ru.maxim_khamzin.webapp.storage;
 
 import ru.maxim_khamzin.webapp.exception.StorageException;
 import ru.maxim_khamzin.webapp.model.Resume;
+import ru.maxim_khamzin.webapp.storage.serializer.ObjectStreamSerializer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,20 +16,21 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
+    private final ObjectStreamSerializer objectStreamSerializer;
 
-    protected abstract void doWrite(final Resume resume, final OutputStream outputStream) throws IOException;
 
-    protected abstract Resume doRead(final InputStream inputStream) throws IOException;
-
-    public AbstractPathStorage(String dir) {
+    public PathStorage(String dir, ObjectStreamSerializer objectStreamSerializer) {
         directory = Paths.get(dir);
+        this.objectStreamSerializer = objectStreamSerializer;
+
         Objects.requireNonNull(directory, "directory must not be null");
 
         if (!Files.isDirectory(directory) || !Files.isWritable(directory))
-            throw new IllegalArgumentException("Is not a directory or it's not writable: %s".formatted(directory));
+            throw new IllegalArgumentException("Is not a directory or it's not writable: %s"
+                    .formatted(directory));
     }
 
     @Override
@@ -62,7 +62,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(final Path path) {
         try (final var bufferedInputStream = new BufferedInputStream(Files.newInputStream(path))) {
-            return doRead(bufferedInputStream);
+            return objectStreamSerializer.doRead(bufferedInputStream);
         }
         catch (FileNotFoundException e) {
             throw new StorageException("The file was not found at the specified path: %s"
@@ -77,7 +77,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(final Resume resume, final Path path) {
         try (final var bufferedOutputStream = new BufferedOutputStream(Files.newOutputStream(path))) {
-            doWrite(resume, bufferedOutputStream);
+            objectStreamSerializer.doWrite(resume, bufferedOutputStream);
         }
         catch (IOException e) {
             throw new StorageException("Failed to write resume to file at specified path: %s"
@@ -111,7 +111,8 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 //        catch (IOException e) {
 //            throw new StorageException("Failed to delete resume to file: %s".formatted(directory), e);
 //        }
-        getFilesList().forEach(this::doDelete);
+        final var filesList = getFilesList();
+        filesList.forEach(this::doDelete);
     }
 
     @Override
@@ -122,7 +123,8 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 //        catch (IOException e) {
 //            throw new StorageException("Failed to count the number of resumes", e);
 //        }
-        return (int) getFilesList().count();
+        final var filesList = getFilesList();
+        return (int) filesList.count();
     }
 
     private String getFileName(final Path path) {
